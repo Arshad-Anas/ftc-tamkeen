@@ -6,6 +6,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDrivetrain;
 
@@ -34,8 +35,8 @@ public class MainTeleOpPlaneLauncher extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            // Check if the "A" button on gamepad1 is pressed
-            if (gamepad1.a) {
+            // Check if the "A" button on gamepad2 is pressed
+            if (gamepad2.a) {
                 // Toggle the servo position
                 if (servoPositionIsZero) {
                     yourServo.setPosition(0.5);  // 90 degrees
