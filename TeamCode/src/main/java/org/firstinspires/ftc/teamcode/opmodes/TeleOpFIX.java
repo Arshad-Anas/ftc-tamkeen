@@ -37,7 +37,7 @@ public class TeleOpFIX extends LinearOpMode {
         if (servoPositionIsZero) {
             yourServo.setPosition(0.0);  // 0 degrees
         } else {
-            yourServo.setPosition(0.25);  // 90 degrees
+            yourServo.setPosition(0.25);  // 45 degrees
         }
         for (LynxModule hub : hubs) hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
 
@@ -54,7 +54,7 @@ public class TeleOpFIX extends LinearOpMode {
             if (gamepad2.a) {
                 // Toggle the servo position
                 if (servoPositionIsZero) {
-                    yourServo.setPosition(0.25);  // 90 degrees
+                    yourServo.setPosition(0.25);  // 45 degrees
                 } else {
                     yourServo.setPosition(0.0);  // 0 degrees
                 }
