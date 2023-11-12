@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
+
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDrivetrain;
 
 import java.util.List;
@@ -35,8 +36,8 @@ public class MainTeleOpPlaneLauncher extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            // Check if the "A" button on gamepad2 is pressed
-            if (gamepad2.a) {
+            // Check if the "A" button on gamepad1 is pressed
+            if (gamepad1.a) {
                 // Toggle the servo position
                 if (servoPositionIsZero) {
                     yourServo.setPosition(0.5);  // 90 degrees
