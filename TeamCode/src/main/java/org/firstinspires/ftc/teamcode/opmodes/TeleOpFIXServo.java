@@ -1,3 +1,5 @@
+package org.firstinspires.ftc.teamcode.opmodes;
+
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
