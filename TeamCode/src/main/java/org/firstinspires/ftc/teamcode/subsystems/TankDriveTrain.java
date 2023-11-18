@@ -5,8 +5,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class TankDriveTrain {
-    DcMotor leftMotor;
-    DcMotor rightMotor;
+    private DcMotor leftMotor;
+    private DcMotor rightMotor;
+
     public TankDriveTrain(HardwareMap hardwareMap) {
         leftMotor = hardwareMap.get(DcMotor.class, "left");
         rightMotor = hardwareMap.get(DcMotor.class, "rightd");
@@ -22,4 +23,17 @@ public class TankDriveTrain {
         rightMotor.setPower(straight - turn);
     }
 
+    // Placeholder for getRawExternalHeading (without gyro)
+    public double getRawExternalHeading() {
+        // Implement the logic to get the raw external heading without a gyro
+        // For example, return a constant value or another sensor reading
+        return 0.0;
+    }
+
+    // Placeholder for getExternalHeadingVelocity (without gyro)
+    public double getExternalHeadingVelocity() {
+        // Implement the logic to get the heading velocity without a gyro
+        // For example, return a constant value or another sensor reading
+        return 0.0;
+    }
 }
