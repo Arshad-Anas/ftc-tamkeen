@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.roadrunner.util.Encoder;
+import org.firstinspires.ftc.teamcode.subsystems.drivetrains.MecanumDrivetrain;
 
 import java.util.Arrays;
 import java.util.List;
@@ -71,14 +72,12 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
 
     @Override
     public double getHeading() {
-        //return drive.getRawExternalHeading();
-        return 0;
+        return drive.getRawExternalHeading();
     }
 
     @Override
     public Double getHeadingVelocity() {
-        //return drive.getExternalHeadingVelocity();
-        return 0.0;
+        return drive.getExternalHeadingVelocity();
     }
 
     @NonNull
