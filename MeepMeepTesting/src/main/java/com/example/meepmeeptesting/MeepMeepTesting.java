@@ -24,8 +24,6 @@ public class MeepMeepTesting {
                                 .turn(Math.toRadians(90))
                                 .build()
                 );
-
-                .setDarkMode(true)
         meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_OFFICIAL)
                 .setBackgroundAlpha(0.95f)
                 .addEntity(myBot)
