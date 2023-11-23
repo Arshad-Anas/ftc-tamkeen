@@ -16,15 +16,13 @@ import org.firstinspires.ftc.teamcode.subsystems.TankDriveTrain;
 import java.util.List;
 
 @TeleOp(group = "21836 TeleOp")
-public class TeleOpFIX3 extends LinearOpMode {
+public class TestHanger extends LinearOpMode {
 
     MultipleTelemetry myTelemetry;
     List<LynxModule> hubs;
 
-    Servo yourServo;
-    boolean servoPositionIsZero = true;
-    TankDriveTrain drive;
     DcMotor hangerMotor;
+
 
 
     @Override
@@ -33,43 +31,24 @@ public class TeleOpFIX3 extends LinearOpMode {
         myTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         GamepadEx Gamepad1 = new GamepadEx(gamepad1);
         hubs = hardwareMap.getAll(LynxModule.class);
-        drive = new TankDriveTrain(hardwareMap);
         // Initialize your hardware components here
         hangerMotor = hardwareMap.dcMotor.get("hangerMotor");
-        yourServo = hardwareMap.servo.get("your_servo");
-
-        // Set the initial position of the servo
-        if (servoPositionIsZero) {
-            yourServo.setPosition(0.25);  // 0 degrees
-        } else {
-            yourServo.setPosition(0.25);  // 45 degrees
-        }
         for (LynxModule hub : hubs) hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
 
         waitForStart();
 
         while (opModeIsActive()) {
             for (LynxModule hub : hubs) hub.clearBulkCache();
-            drive.setPower(gamepad1.right_stick_y, gamepad1.left_stick_x);
 
-            if (gamepad2.atRest() == true) {
+            if (gamepad1.atRest() == true) {
                 hangerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
 
-            hangerMotor.setPower(gamepad2.left_trigger - gamepad2.right_trigger);
-
-            // Check if the "A" button on gamepad2 is pressed
-            if (gamepad2.a) {
-                // Toggle the servo position
-                if (servoPositionIsZero) {
-                    yourServo.setPosition(0.25);  // 45 degrees
-                } else {
-                    yourServo.setPosition(0.0);  // 0 degrees
-                }
-                servoPositionIsZero = !servoPositionIsZero; // Toggle the state
-                sleep(500); // Add a delay to prevent rapid toggling
-            }
+            hangerMotor.setPower(gamepad1.left_trigger - gamepad1.right_trigger);
             myTelemetry.update();
+
         }
+
+
     }
 }
