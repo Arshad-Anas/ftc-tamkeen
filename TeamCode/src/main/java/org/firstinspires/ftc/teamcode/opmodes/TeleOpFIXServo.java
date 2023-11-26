@@ -6,7 +6,7 @@ import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name="Dual Servo Control", group="FTC")
+@TeleOp(name="Dual Servo Control", group="23925 Test")
 public class TeleOpFIXServo extends LinearOpMode {
 
     // Declare our servos

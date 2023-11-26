@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import java.util.List;
 
-@TeleOp(group = "21836 TeleOp")
+@TeleOp(group = "23925 Test")
 public class MainTeleOpPlaneLauncher extends LinearOpMode {
 
     MultipleTelemetry myTelemetry;

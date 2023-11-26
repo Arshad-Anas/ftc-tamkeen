@@ -52,7 +52,7 @@ import java.util.List;
 
 //overide motor set power
 @Config
-public class MecanumDrivetrain extends MecanumDrive {
+public class TankDrivetrainTraction extends MecanumDrive {
     public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(0, 0, 0);
     public static PIDCoefficients HEADING_PID = new PIDCoefficients(0, 0, 0);
 
@@ -67,7 +67,7 @@ public class MecanumDrivetrain extends MecanumDrive {
     private static final TrajectoryVelocityConstraint VEL_CONSTRAINT = getVelocityConstraint(DriveConstants.MAX_VEL, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH);
     private static final TrajectoryAccelerationConstraint ACCEL_CONSTRAINT = getAccelerationConstraint(DriveConstants.MAX_ACCEL);
 
-    private final DcMotorEx leftFront, leftBack, rightBack, rightFront;
+    private final DcMotorEx leftFront, rightFront;
     private final List<DcMotorEx> motors;
 
     protected final VoltageSensor batteryVoltageSensor;
@@ -75,7 +75,7 @@ public class MecanumDrivetrain extends MecanumDrive {
     private final List<Integer> lastEncPositions = new ArrayList<>();
     private final List<Integer> lastEncVels = new ArrayList<>();
 
-    public MecanumDrivetrain(HardwareMap hardwareMap) {
+    public TankDrivetrainTraction(HardwareMap hardwareMap) {
         super(DriveConstants.kV, DriveConstants.kA, DriveConstants.kStatic, DriveConstants.TRACK_WIDTH, DriveConstants.TRACK_WIDTH, LATERAL_MULTIPLIER);
 
         TrajectoryFollower follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
@@ -93,12 +93,12 @@ public class MecanumDrivetrain extends MecanumDrive {
 
         imu = new ThreadedIMU(hardwareMap, "imu", new RevHubOrientationOnRobot(LOGO_FACING_DIR, USB_FACING_DIR));
 
-        leftFront = hardwareMap.get(DcMotorEx.class, "left front");
-        leftBack = hardwareMap.get(DcMotorEx.class, "left back");
-        rightBack = hardwareMap.get(DcMotorEx.class, "right back");
-        rightFront = hardwareMap.get(DcMotorEx.class, "right front");
+        leftFront = hardwareMap.get(DcMotorEx.class, "left");
+        //leftBack = hardwareMap.get(DcMotorEx.class, "left back");
+        //rightBack = hardwareMap.get(DcMotorEx.class, "right back");
+        rightFront = hardwareMap.get(DcMotorEx.class, "rightd");
 
-        motors = Arrays.asList(leftFront, leftBack, rightBack, rightFront);
+        motors = Arrays.asList(leftFront, rightFront);
 
         for (DcMotorEx motor : motors) {
             MotorConfigurationType motorConfigurationType = motor.getMotorType().clone();
@@ -117,7 +117,7 @@ public class MecanumDrivetrain extends MecanumDrive {
         }
 
         // TODO: reverse any motors using DcMotor.setDirection()
-        rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
+        //rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
 
         List<Integer> lastTrackingEncPositions = new ArrayList<>();
@@ -279,8 +279,8 @@ public class MecanumDrivetrain extends MecanumDrive {
     @Override
     public void setMotorPowers(double v, double v1, double v2, double v3) {
         leftFront.setPower(v);
-        leftBack.setPower(v1);
-        rightBack.setPower(v2);
+        //leftBack.setPower(v1);
+        //rightBack.setPower(v2);
         rightFront.setPower(v3);
     }
 
@@ -325,25 +325,16 @@ public class MecanumDrivetrain extends MecanumDrive {
     /**
      * Field-centric driving using (threaded) {@link ThreadedIMU}
      *
-     * @param xCommand strafing input
      * @param yCommand forward input
      * @param turnCommand turning input
      */
-    public void run(double xCommand, double yCommand, double turnCommand) {
-
-        // counter-rotate translation vector by current heading
-        // This cannot be used for Tank Drive Train
-        double x = xCommand;
-        double y = yCommand;
-        double theta = -getHeading();
-        xCommand = x * cos(theta) - y * sin(theta);
-        yCommand = x * sin(theta) + y * cos(theta);
+    public void run(double yCommand, double turnCommand) {
 
         // run motors
         double voltageScalar = 12.0 / batteryVoltageSensor.getVoltage();
         setWeightedDrivePower(new Pose2d(
                 yCommand * voltageScalar,
-                -xCommand * voltageScalar,
+                0,
                 -turnCommand * voltageScalar
         ));
     }

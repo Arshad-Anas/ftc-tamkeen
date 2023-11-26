@@ -1,13 +1,18 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
+import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Button.A;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.subsystems.TankDriveTrain;
 import org.firstinspires.ftc.teamcode.subsystems.drivetrains.MecanumDrivetrain;
+import org.firstinspires.ftc.teamcode.subsystems.drivetrains.TankDrivetrainTraction;
 
 import java.util.List;
 
@@ -17,7 +22,7 @@ public class MainTeleOp extends LinearOpMode {
     MultipleTelemetry myTelemetry;
     List<LynxModule> hubs;
     GamepadEx Gamepad1, Gamepad2;
-    MecanumDrivetrain drivetrain;
+    TankDrivetrainTraction drivetrain;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -33,10 +38,10 @@ public class MainTeleOp extends LinearOpMode {
         Gamepad1 = new GamepadEx(gamepad1);
         Gamepad2 = new GamepadEx(gamepad2);
 
-        drivetrain = new MecanumDrivetrain(hardwareMap);
+        drivetrain = new TankDrivetrainTraction(hardwareMap);
 
         waitForStart();
-        drivetrain.imu.start();
+        //drivetrain.imu.start();
 
         // Control loop:
         while (opModeIsActive()) {
@@ -46,15 +51,16 @@ public class MainTeleOp extends LinearOpMode {
             Gamepad1.readButtons();
             Gamepad2.readButtons();
 
+            boolean aPressed = Gamepad1.wasJustPressed(A); // this will only be true for one loop
+
             // Field-centric drive dt with control stick inputs:
             drivetrain.run(
-                    Gamepad1.getLeftX(),
                     Gamepad1.getLeftY(),
                     Gamepad1.getRightX()
             );
 
             myTelemetry.update();
         }
-        drivetrain.imu.interrupt();
+        //drivetrain.imu.interrupt();
     }
 }
