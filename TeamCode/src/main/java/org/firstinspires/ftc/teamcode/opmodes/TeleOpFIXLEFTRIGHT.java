@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import java.util.List;
 
-@TeleOp(group = "21836 TeleOp")
+@TeleOp(group = "23925 Test")
 public class TeleOpFIXLEFTRIGHT extends LinearOpMode {
 
     MultipleTelemetry myTelemetry;

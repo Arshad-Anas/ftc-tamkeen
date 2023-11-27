@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.subsystems.TankDriveTrain;
 import java.util.List;
 
 
-@Autonomous(group = "21836 Autonomous", preselectTeleOp = "AutonTest5")
+@Autonomous(group = "23925 MainAutonomous", preselectTeleOp = "AutonTest5")
 public class AutonTest5 extends LinearOpMode {
 
     MultipleTelemetry myTelemetry;

@@ -32,6 +32,7 @@ public class TeleOpFIX3 extends LinearOpMode {
 
         myTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         GamepadEx Gamepad1 = new GamepadEx(gamepad1);
+        GamepadEx Gamepad2 = new GamepadEx(gamepad2);
         hubs = hardwareMap.getAll(LynxModule.class);
         drive = new TankDriveTrain(hardwareMap);
         // Initialize your hardware components here
@@ -39,18 +40,18 @@ public class TeleOpFIX3 extends LinearOpMode {
         yourServo = hardwareMap.servo.get("your_servo");
 
         // Set the initial position of the servo
-        if (servoPositionIsZero) {
-            yourServo.setPosition(0.25);  // 0 degrees
-        } else {
-            yourServo.setPosition(0.25);  // 45 degrees
-        }
+        yourServo.setPosition(0);  // 0 degrees
+
         for (LynxModule hub : hubs) hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
 
         waitForStart();
 
         while (opModeIsActive()) {
             for (LynxModule hub : hubs) hub.clearBulkCache();
+
+            //driving
             drive.setPower(gamepad1.right_stick_y, gamepad1.left_stick_x);
+
 
             if (gamepad2.atRest() == true) {
                 hangerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -60,9 +61,10 @@ public class TeleOpFIX3 extends LinearOpMode {
 
             // Check if the "A" button on gamepad2 is pressed
             if (gamepad2.a) {
+
                 // Toggle the servo position
                 if (servoPositionIsZero) {
-                    yourServo.setPosition(0.25);  // 45 degrees
+                    yourServo.setPosition(45);  // This value will not work for the plan to launch (0.25)
                 } else {
                     yourServo.setPosition(0.0);  // 0 degrees
                 }
