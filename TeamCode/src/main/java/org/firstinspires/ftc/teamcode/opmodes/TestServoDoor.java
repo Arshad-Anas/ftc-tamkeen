@@ -20,7 +20,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class TestServoDoor extends LinearOpMode {
 
     // Declare our servos
-    private SimpleServo servo1, servo2;
+    private Servo servo1, servo2;
 
     // Declare our gamepad
     private GamepadEx Gamepad1;
@@ -28,8 +28,8 @@ public class TestServoDoor extends LinearOpMode {
     @Override
     public void runOpMode() {
         // Initialize the servos to a position
-        servo1 = new SimpleServo(hardwareMap, "servo1", 0.0, 1.0);
-        servo2 = new SimpleServo(hardwareMap, "servo2", 0.0, 1.0);
+        servo1 = hardwareMap.get(Servo.class, "servo1");
+        servo2 = hardwareMap.get(Servo.class, "servo2");
 
         // Initialize the gamepad
         Gamepad1 = new GamepadEx(gamepad1);
@@ -38,21 +38,27 @@ public class TestServoDoor extends LinearOpMode {
         waitForStart();
 
         servo1.setPosition(0);
-
+        boolean position = true;
         while (opModeIsActive()) {
-            if (gamepad1.a) {
-                // if the position is 90 make it 0
-                if (servo1.getPosition() == 0.2) {
-                    servo1.setPosition(0);
-                    //servo2.setPosition(0);
-                } else {//if (servo1.getPosition() == 0.25) { // else set the position of the servos to 90
-                    servo1.setPosition(0.2);
-                    //servo2.setPosition(45);
+            if (gamepad1.a && position) {
+                if (servo1.getPosition() == 0) {
+                    setPosition(1);
+                } else {
+                    setPosition(0);
                 }
-                sleep(500);
+                position = false;
+            }
+
+            if (!gamepad1.a) {
+                position = true;
             }
             // Give hardware a chance to catch up
             idle();
         }
+    }
+
+    public void setPosition(double position) {
+        servo1.setPosition(position);
+        servo2.setPosition(1-position);
     }
 }

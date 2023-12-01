@@ -35,7 +35,7 @@ public class AutonTest5 extends LinearOpMode {
 
         waitForStart();
 
-        blueBackboard();
+        redZoneStraight();
 
         //long durationTurnLeft = 1000; // 1 second (adjust as needed)
         //long durationForwardAgain = 3000; // 3 seconds
@@ -60,15 +60,16 @@ public class AutonTest5 extends LinearOpMode {
 //        drive.setPower(0.0, 0.0); // Stop the robot
 //        sleep(500); // Add a delay to prevent rapid toggling
     }
-    public void blueBackboard() {
+
+    public void redZone() {
         long startTime = System.currentTimeMillis();
-        long durationForward = 800; // 2 seconds
-        long durationTurn = 1300; // 1 second (adjust as needed)
-        long durationForwardAfterTurnBackboard = 700;
+        long durationForward = 850; // 2 seconds
+        long durationTurn = 1950; // 1 second (adjust as needed)
+        long durationForwardAfterTurnBackboard = 1650;
 
         while (opModeIsActive() && System.currentTimeMillis() - startTime < durationForward) {
             for (LynxModule hub : hubs) hub.clearBulkCache();
-            drive.setPower(1.0, 0.0); // Go forward at full power
+            drive.setPower(-1.0, 0.0); // Go forward at full power
             myTelemetry.update();
         }
 
@@ -90,44 +91,7 @@ public class AutonTest5 extends LinearOpMode {
 
         while (opModeIsActive() && System.currentTimeMillis() - startTime < durationForwardAfterTurnBackboard) {
             for (LynxModule hub : hubs) hub.clearBulkCache();
-            drive.setPower(1.0, 0.0); // Turn right in place (adjust power as needed)
-            myTelemetry.update();
-        }
-
-        drive.setPower(0.0, 0.0); // Stop the robot
-        sleep(500); // Add a delay to prevent rapid toggling
-    }
-    public void blueZone() {
-        long startTime = System.currentTimeMillis();
-        long durationForward = 800; // 2 seconds
-        long durationTurn = 1300; // 1 second (adjust as needed)
-        long durationForwardAfterTurnBackboard = 1300;
-
-        while (opModeIsActive() && System.currentTimeMillis() - startTime < durationForward) {
-            for (LynxModule hub : hubs) hub.clearBulkCache();
-            drive.setPower(1.0, 0.0); // Go forward at full power
-            myTelemetry.update();
-        }
-
-        drive.setPower(0.0, 0.0); // Stop the robot
-        sleep(500); // Add a delay to prevent rapid toggling
-
-        startTime = System.currentTimeMillis(); // Reset the start time
-
-        while (opModeIsActive() && System.currentTimeMillis() - startTime < durationTurn) {
-            for (LynxModule hub : hubs) hub.clearBulkCache();
-            drive.setPower(0.0, 1.0); // Turn right in place (adjust power as needed)
-            myTelemetry.update();
-        }
-
-        drive.setPower(0.0, 0.0); // Stop the robot
-        sleep(500); // Add a delay to prevent rapid toggling
-
-        startTime = System.currentTimeMillis(); // Reset the start time
-
-        while (opModeIsActive() && System.currentTimeMillis() - startTime < durationForwardAfterTurnBackboard) {
-            for (LynxModule hub : hubs) hub.clearBulkCache();
-            drive.setPower(1.0, 0.0); // Turn right in place (adjust power as needed)
+            drive.setPower(-1.0, 0.0); // Turn right in place (adjust power as needed)
             myTelemetry.update();
         }
 
@@ -137,13 +101,78 @@ public class AutonTest5 extends LinearOpMode {
 
     public void redBackboard() {
         long startTime = System.currentTimeMillis();
-        long durationForward = 800; // 2 seconds
-        long durationTurn = 1300; // 1 second (adjust as needed)
-        long durationForwardAfterTurnBackboard = 700;
+        long durationForward = 850; // 2 seconds
+        long durationTurn = 1800; // 1 second (adjust as needed)
+        long durationForwardAfterTurnBackboard = 850;
 
         while (opModeIsActive() && System.currentTimeMillis() - startTime < durationForward) {
             for (LynxModule hub : hubs) hub.clearBulkCache();
-            drive.setPower(1.0, 0.0); // Go forward at full power
+            drive.setPower(-1.0, 0.0); // Go forward at full power
+            myTelemetry.update();
+        }
+
+        drive.setPower(0.0, 0.0); // Stop the robot
+        sleep(500); // Add a delay to prevent rapid toggling
+
+        startTime = System.currentTimeMillis(); // Reset the start time
+
+        while (opModeIsActive() && System.currentTimeMillis() - startTime < durationTurn) {
+            for (LynxModule hub : hubs) hub.clearBulkCache();
+            drive.setPower(0.0, 1.0); // Turn right in place (adjust power as needed)
+            myTelemetry.update();
+        }
+
+        drive.setPower(0.0, 0.0); // Stop the robot
+        sleep(500); // Add a delay to prevent rapid toggling
+
+        startTime = System.currentTimeMillis(); // Reset the start time
+
+        while (opModeIsActive() && System.currentTimeMillis() - startTime < durationForwardAfterTurnBackboard) {
+            for (LynxModule hub : hubs) hub.clearBulkCache();
+            drive.setPower(-1.0, 0.0); // Turn right in place (adjust power as needed)
+            myTelemetry.update();
+        }
+
+        drive.setPower(0.0, 0.0); // Stop the robot
+        sleep(500); // Add a delay to prevent rapid toggling
+    }
+
+    public void redBackboardStraight() {
+        long startTime = System.currentTimeMillis();
+        long durationForward = 850; // 2 seconds
+
+        while (opModeIsActive() && System.currentTimeMillis() - startTime < durationForward) {
+            for (LynxModule hub : hubs) hub.clearBulkCache();
+            drive.setPower(-1.0, 0.0); // Go forward at full power
+            myTelemetry.update();
+        }
+
+        drive.setPower(0.0, 0.0); // Stop the robot
+        sleep(500); // Add a delay to prevent rapid toggling
+    }
+
+    public void redZoneStraight() {
+        long startTime = System.currentTimeMillis();
+        long durationForward = 1450; // 2 seconds
+
+        while (opModeIsActive() && System.currentTimeMillis() - startTime < durationForward) {
+            for (LynxModule hub : hubs) hub.clearBulkCache();
+            drive.setPower(-1.0, 0.0); // Go forward at full power
+            myTelemetry.update();
+        }
+
+        drive.setPower(0.0, 0.0); // Stop the robot
+        sleep(500); // Add a delay to prevent rapid toggling
+    }
+    public void blueZone() {
+        long startTime = System.currentTimeMillis();
+        long durationForward = 750; // 2 seconds
+        long durationTurn = 1550; // 1 second (adjust as needed)
+        long durationForwardAfterTurnBackboard = 1550;
+
+        while (opModeIsActive() && System.currentTimeMillis() - startTime < durationForward) {
+            for (LynxModule hub : hubs) hub.clearBulkCache();
+            drive.setPower(-1.0, 0.0); // Go forward at full power
             myTelemetry.update();
         }
 
@@ -165,22 +194,23 @@ public class AutonTest5 extends LinearOpMode {
 
         while (opModeIsActive() && System.currentTimeMillis() - startTime < durationForwardAfterTurnBackboard) {
             for (LynxModule hub : hubs) hub.clearBulkCache();
-            drive.setPower(1.0, 0.0); // Turn right in place (adjust power as needed)
+            drive.setPower(-1.0, 0.0); // Turn right in place (adjust power as needed)
             myTelemetry.update();
         }
 
         drive.setPower(0.0, 0.0); // Stop the robot
         sleep(500); // Add a delay to prevent rapid toggling
     }
-    public void redZone() {
+
+    public void blueBackboard() {
         long startTime = System.currentTimeMillis();
-        long durationForward = 800; // 2 seconds
-        long durationTurn = 1300; // 1 second (adjust as needed)
-        long durationForwardAfterTurnBackboard = 1300;
+        long durationForward = 850; // 2 seconds
+        long durationTurn = 1800; // 1 second (adjust as needed)
+        long durationForwardAfterTurnBackboard = 850;
 
         while (opModeIsActive() && System.currentTimeMillis() - startTime < durationForward) {
             for (LynxModule hub : hubs) hub.clearBulkCache();
-            drive.setPower(1.0, 0.0); // Go forward at full power
+            drive.setPower(-1.0, 0.0); // Go forward at full power
             myTelemetry.update();
         }
 
@@ -191,7 +221,7 @@ public class AutonTest5 extends LinearOpMode {
 
         while (opModeIsActive() && System.currentTimeMillis() - startTime < durationTurn) {
             for (LynxModule hub : hubs) hub.clearBulkCache();
-            drive.setPower(0.0, -1.0); // Turn left in place (adjust power as needed)
+            drive.setPower(0.0, -1.0); // Turn right in place (adjust power as needed)
             myTelemetry.update();
         }
 
@@ -202,7 +232,35 @@ public class AutonTest5 extends LinearOpMode {
 
         while (opModeIsActive() && System.currentTimeMillis() - startTime < durationForwardAfterTurnBackboard) {
             for (LynxModule hub : hubs) hub.clearBulkCache();
-            drive.setPower(1.0, 0.0); // Turn right in place (adjust power as needed)
+            drive.setPower(-1.0, 0.0); // Turn right in place (adjust power as needed)
+            myTelemetry.update();
+        }
+
+        drive.setPower(0.0, 0.0); // Stop the robot
+        sleep(500); // Add a delay to prevent rapid toggling
+    }
+
+    public void blueBackboardStraight() {
+        long startTime = System.currentTimeMillis();
+        long durationForward = 850; // 2 seconds
+
+        while (opModeIsActive() && System.currentTimeMillis() - startTime < durationForward) {
+            for (LynxModule hub : hubs) hub.clearBulkCache();
+            drive.setPower(-1.0, 0.0); // Go forward at full power
+            myTelemetry.update();
+        }
+
+        drive.setPower(0.0, 0.0); // Stop the robot
+        sleep(500); // Add a delay to prevent rapid toggling
+    }
+
+    public void blueZoneStraight() {
+        long startTime = System.currentTimeMillis();
+        long durationForward = 1450; // 2 seconds
+
+        while (opModeIsActive() && System.currentTimeMillis() - startTime < durationForward) {
+            for (LynxModule hub : hubs) hub.clearBulkCache();
+            drive.setPower(-1.0, 0.0); // Go forward at full power
             myTelemetry.update();
         }
 
