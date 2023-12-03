@@ -21,7 +21,7 @@ public class TeleOpFIX3 extends LinearOpMode {
     MultipleTelemetry myTelemetry;
     List<LynxModule> hubs;
 
-    Servo yourServo;
+    Servo planeServo, doorServo1, doorServo2;
     boolean servoPositionIsZero = true;
     TankDriveTrain drive;
     DcMotor hangerMotor;
@@ -37,10 +37,17 @@ public class TeleOpFIX3 extends LinearOpMode {
         drive = new TankDriveTrain(hardwareMap);
         // Initialize your hardware components here
         hangerMotor = hardwareMap.dcMotor.get("hangerMotor");
-        yourServo = hardwareMap.servo.get("your_servo");
+        planeServo = hardwareMap.servo.get("your_servo");
+        doorServo1 = hardwareMap.get(Servo.class, "servo1");
+        doorServo2 = hardwareMap.get(Servo.class, "servo2");
 
         // Set the initial position of the servo
-        yourServo.setPosition(0);  // 0 degrees
+        planeServo.setPosition(0);  // 0 degrees
+
+        // set up the variables for the door
+        doorServo1.setPosition(0);
+        doorServo2.setPosition(0);
+        boolean position = true;
 
         for (LynxModule hub : hubs) hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
 
@@ -52,7 +59,7 @@ public class TeleOpFIX3 extends LinearOpMode {
             //driving
             drive.setPower(gamepad1.right_stick_y, gamepad1.left_stick_x);
 
-
+            // To control the hanging arm
             if (gamepad2.atRest() == true) {
                 hangerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
@@ -60,18 +67,39 @@ public class TeleOpFIX3 extends LinearOpMode {
             hangerMotor.setPower(gamepad2.left_trigger - gamepad2.right_trigger);
 
             // Check if the "A" button on gamepad2 is pressed
+            // This is to launch the plane
             if (gamepad2.a) {
 
                 // Toggle the servo position
                 if (servoPositionIsZero) {
-                    yourServo.setPosition(45);  // This value will not work for the plan to launch (0.25)
+                    planeServo.setPosition(45);  // This value will not work for the plan to launch (0.25)
                 } else {
-                    yourServo.setPosition(0.0);  // 0 degrees
+                    planeServo.setPosition(0.0);  // 0 degrees
                 }
                 servoPositionIsZero = !servoPositionIsZero; // Toggle the state
                 sleep(500); // Add a delay to prevent rapid toggling
             }
+
+            // To move the arm on the front of the Robot
+            if (gamepad1.a && position) {
+                if (doorServo1.getPosition() == 0) {
+                    setPosition(.475);
+                } else {
+                    setPosition(0);
+                }
+                position = false;
+            }
+
+            if (!gamepad1.a) {
+                position = true;
+            }
+
             myTelemetry.update();
         }
+    }
+
+    public void setPosition(double position) {
+        doorServo1.setPosition(position);
+        doorServo2.setPosition(1-position);
     }
 }

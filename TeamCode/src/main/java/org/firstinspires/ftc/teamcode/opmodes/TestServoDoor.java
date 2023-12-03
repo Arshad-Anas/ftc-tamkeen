@@ -42,7 +42,7 @@ public class TestServoDoor extends LinearOpMode {
         while (opModeIsActive()) {
             if (gamepad1.a && position) {
                 if (servo1.getPosition() == 0) {
-                    setPosition(1);
+                    setPosition(.475);
                 } else {
                     setPosition(0);
                 }
