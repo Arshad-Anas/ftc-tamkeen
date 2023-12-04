@@ -46,12 +46,12 @@ public class TestServoDoor extends LinearOpMode {
                 } else {
                     setPosition(0);
                 }
-                position = false;
+//                position = false;
             }
 
-            if (!gamepad1.a) {
-                position = true;
-            }
+//            if (!gamepad1.a) {
+//                position = true;
+//            }
             // Give hardware a chance to catch up
             idle();
         }

@@ -22,7 +22,7 @@ public class TeleOpFIX3 extends LinearOpMode {
     List<LynxModule> hubs;
 
     Servo planeServo, doorServo1, doorServo2;
-    boolean servoPositionIsZero = true;
+    boolean servoPositionIsZero = false;
     TankDriveTrain drive;
     DcMotor hangerMotor;
 
@@ -42,7 +42,7 @@ public class TeleOpFIX3 extends LinearOpMode {
         doorServo2 = hardwareMap.get(Servo.class, "servo2");
 
         // Set the initial position of the servo
-        planeServo.setPosition(0);  // 0 degrees
+        planeServo.setPosition(45);  // 0 degrees
 
         // set up the variables for the door
         doorServo1.setPosition(0);
