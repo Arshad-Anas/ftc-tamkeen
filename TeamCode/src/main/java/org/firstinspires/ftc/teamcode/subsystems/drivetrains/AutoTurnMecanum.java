@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems.drivetrains;
 
 import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.normalizeRadians;
+import static org.firstinspires.ftc.teamcode.subsystems.centerstage.Robot.maxVoltage;
 
 import static java.lang.Math.toDegrees;
 
@@ -56,7 +57,7 @@ public class AutoTurnMecanum extends MecanumDrivetrain {
 
     @Override
     public void run(double xCommand, double yCommand, double turnCommand) {
-        double scalar = 12.0 / batteryVoltageSensor.getVoltage();
+        double scalar = maxVoltage / batteryVoltageSensor.getVoltage();
         boolean useManualInput = turnCommand != 0.0;
 
         if (useManualInput || !useAutoTurn) {

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems.drivetrains;
 import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.normalizeRadians;
 import static org.firstinspires.ftc.teamcode.roadrunner.DriveConstants.LOGO_FACING_DIR;
 import static org.firstinspires.ftc.teamcode.roadrunner.DriveConstants.USB_FACING_DIR;
+import static org.firstinspires.ftc.teamcode.subsystems.centerstage.Robot.maxVoltage;
 import static java.lang.Math.abs;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -218,7 +219,7 @@ public class MecanumDrivetrain extends MecanumDrive {
     public void setPIDFCoefficients(DcMotor.RunMode runMode, PIDFCoefficients coefficients) {
         PIDFCoefficients compensatedCoefficients = new PIDFCoefficients(
                 coefficients.p, coefficients.i, coefficients.d,
-                coefficients.f * 12 / batteryVoltageSensor.getVoltage()
+                coefficients.f * maxVoltage / batteryVoltageSensor.getVoltage()
         );
 
         for (DcMotorEx motor : motors) {
@@ -337,7 +338,7 @@ public class MecanumDrivetrain extends MecanumDrive {
         yCommand = x * sin(theta) + y * cos(theta);
 
         // run motors
-        double voltageScalar = 12.0 / batteryVoltageSensor.getVoltage();
+        double voltageScalar = maxVoltage / batteryVoltageSensor.getVoltage();
         setWeightedDrivePower(new Pose2d(
                 yCommand * voltageScalar,
                 -xCommand * voltageScalar,
