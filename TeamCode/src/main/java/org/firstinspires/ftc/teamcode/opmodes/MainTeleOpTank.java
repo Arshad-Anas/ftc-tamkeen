@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.subsystems.TankDriveTrain;
 import java.util.List;
 
 @TeleOp(group = "21836 TeleOp")
-public class TeleOpFIX3 extends LinearOpMode {
+public class MainTeleOpTank extends LinearOpMode {
 
     MultipleTelemetry myTelemetry;
     List<LynxModule> hubs;
