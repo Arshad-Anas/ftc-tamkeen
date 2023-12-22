@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.subsystems.centerstage.Robot;
 
 @TeleOp(group = "23925 TeleOp")
-public class MainTeleOpMeacunum extends LinearOpMode {
+public class mainTeleOpMeacunum extends LinearOpMode {
 
     MultipleTelemetry mTelemetry;
     GamepadEx gamepadEx1, gamepadEx2;
