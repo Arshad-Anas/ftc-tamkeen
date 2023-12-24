@@ -37,7 +37,7 @@ public class MainTeleOpTank extends LinearOpMode {
         drive = new TankDriveTrain(hardwareMap);
         // Initialize your hardware components here
         hangerMotor = hardwareMap.dcMotor.get("hangerMotor");
-        planeServo = hardwareMap.servo.get("your_servo");
+        planeServo = hardwareMap.servo.get("planeServo");
         doorServo1 = hardwareMap.get(Servo.class, "servo1");
         doorServo2 = hardwareMap.get(Servo.class, "servo2");
 
