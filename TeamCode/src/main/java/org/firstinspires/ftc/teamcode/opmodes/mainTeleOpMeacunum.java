@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
-import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Button.A;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -20,9 +19,8 @@ public class mainTeleOpMeacunum extends LinearOpMode {
     Robot robot;
     boolean servoPositionIsZero = false;
     DcMotor hangerMotor;
-    Servo planeServo, clawServo;
-
-
+    //Servo clawServo1, clawServo2;
+    Servo planeServo, doorServo1, doorServo2;
 
 
     @Override
@@ -38,9 +36,15 @@ public class mainTeleOpMeacunum extends LinearOpMode {
 
         hangerMotor = hardwareMap.dcMotor.get("hangerMotor");
         planeServo = hardwareMap.servo.get("planeServo");
-        clawServo = hardwareMap.servo.get("clawServo");
+        //clawServo1 = hardwareMap.servo.get("clawServo1");
+        //clawServo2 = hardwareMap.servo.get("clawServo2");
+        doorServo1 = hardwareMap.get(Servo.class, "doorServo1");
+        doorServo2 = hardwareMap.get(Servo.class, "doorServo2");
 
-        planeServo.setPosition(45);
+        planeServo.setPosition(1);
+
+        doorServo1.setPosition(0);
+        doorServo2.setPosition(0);
 
         waitForStart();
 
@@ -52,34 +56,46 @@ public class mainTeleOpMeacunum extends LinearOpMode {
             gamepadEx1.readButtons();
             gamepadEx2.readButtons();
 
-            boolean aPressed = gamepadEx1.wasJustPressed(A); // this will only be true for one loop
-
-            if (gamepad2.atRest() == true) {
+            //For the hanger
+            if (gamepad2.atRest()) {
                 hangerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
             hangerMotor.setPower(gamepad2.left_trigger - gamepad2.right_trigger);
 
+            // For the plane servo
+            if (gamepad2.a) {
 
+                // Toggle the servo position
+                if (servoPositionIsZero) {
+                    planeServo.setPosition(1);
+                } else if (gamepad2.a) {
+                    planeServo.setPosition(0);
+                }
 
-//            if (gamepad2.a) {
+                servoPositionIsZero = !servoPositionIsZero; // Toggle the state
+                sleep(500); // Add a delay to prevent rapid toggling
+            }
+
+            // for the claw
+//            if (gamepad1.a && clawServo1.getPosition() == 0.0 && clawServo2.getPosition() == 0.0) {
+//                clawServo1.setPosition(.5);
+//                clawServo2.setPosition(.5);
 //
-//                // Toggle the servo position
-//                if (servoPositionIsZero) {
-//                    planeServo.setPosition(45);  //
-//                } else if (gamepad2.a) {
-//                   planeServo.setPosition(0.0);
-//                }
 //
-//                servoPositionIsZero = !servoPositionIsZero; // Toggle the state
-//                sleep(500); // Add a delay to prevent rapid toggling
+//            } else if (gamepad1.a) {
+//                clawServo1.setPosition(0.0);
+//                clawServo2.setPosition(0.0);
+//
 //            }
 
-            if (gamepad1.b) {
-
-                clawServo.setPosition(.5);
-
-            } else if (gamepad1.a) {
-                clawServo.setPosition(0.0);
+            if (gamepad1.a) {
+                if (doorServo1.getPosition() == 0) {
+                    doorServo1.setPosition(.350);
+                    doorServo2.setPosition(.525);
+                } else {
+                    doorServo1.setPosition(0.0);
+                    doorServo2.setPosition(0.0);
+                }
             }
 
             // Field-centric drive dt with control stick inputs:
@@ -90,7 +106,8 @@ public class mainTeleOpMeacunum extends LinearOpMode {
             );
 
             mTelemetry.update();
+            robot.interrupt();
         }
-        robot.interrupt();
+
     }
 }
