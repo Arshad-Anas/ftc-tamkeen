@@ -88,14 +88,19 @@ public class mainTeleOpMeacunum extends LinearOpMode {
 //
 //            }
 
-            if (gamepad1.a) {
+            // Door Servo
+            boolean position = true;
+            if (gamepad1.a && position) {
                 if (doorServo1.getPosition() == 0) {
-                    doorServo1.setPosition(.350);
-                    doorServo2.setPosition(.525);
+                    setPosition(.475);
                 } else {
                     doorServo1.setPosition(0.0);
-                    doorServo2.setPosition(0.0);
                 }
+                position = false;
+            }
+
+            if (!gamepad1.a) {
+                position = true;
             }
 
             // Field-centric drive dt with control stick inputs:
@@ -108,6 +113,10 @@ public class mainTeleOpMeacunum extends LinearOpMode {
             mTelemetry.update();
             robot.interrupt();
         }
+    }
 
+    public void setPosition(double position) {
+        doorServo1.setPosition(position);
+        doorServo2.setPosition(1-position);
     }
 }
