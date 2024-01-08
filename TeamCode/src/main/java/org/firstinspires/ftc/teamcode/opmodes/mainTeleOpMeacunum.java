@@ -39,15 +39,16 @@ public class mainTeleOpMeacunum extends LinearOpMode {
         //clawServo1 = hardwareMap.servo.get("clawServo1");
         //clawServo2 = hardwareMap.servo.get("clawServo2");
         doorServo1 = hardwareMap.get(Servo.class, "doorServo1");
-        doorServo2 = hardwareMap.get(Servo.class, "doorServo2");
+        //doorServo2 = hardwareMap.get(Servo.class, "doorServo2");
 
         planeServo.setPosition(1);
 
         doorServo1.setPosition(0);
-        doorServo2.setPosition(0);
+        //doorServo2.setPosition(0);
 
         waitForStart();
 
+        //doorServo2.setDirection(Servo.Direction.REVERSE);
 
         // Control loop:
         while (opModeIsActive()) {
@@ -86,22 +87,18 @@ public class mainTeleOpMeacunum extends LinearOpMode {
 //                clawServo1.setPosition(0.0);
 //                clawServo2.setPosition(0.0);
 //
+
 //            }
 
             // Door Servo
-            boolean position = true;
-            if (gamepad1.a && position) {
+            if (gamepad1.a) {
                 if (doorServo1.getPosition() == 0) {
-                    setPosition(.475);
+                    setPosition(0.475);
                 } else {
-                    doorServo1.setPosition(0.0);
+                    setPosition(0);
                 }
-                position = false;
             }
 
-            if (!gamepad1.a) {
-                position = true;
-            }
 
             // Field-centric drive dt with control stick inputs:
             robot.drivetrain.run(
@@ -117,6 +114,6 @@ public class mainTeleOpMeacunum extends LinearOpMode {
 
     public void setPosition(double position) {
         doorServo1.setPosition(position);
-        doorServo2.setPosition(1-position);
+        //doorServo2.setPosition(1 - position);
     }
 }
