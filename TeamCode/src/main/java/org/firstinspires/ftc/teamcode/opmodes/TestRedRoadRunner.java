@@ -26,8 +26,8 @@ public class TestRedRoadRunner extends LinearOpMode {
         MecanumDrivetrain drive = new MecanumDrivetrain(hardwareMap);
 
         Trajectory trajectory = drive.trajectoryBuilder(new Pose2d())
-                .strafeRight(3.75)
-                .forward(7.916)
+                .strafeRight(45)
+                .forward(94.992)
                 .build();
 
         waitForStart();
