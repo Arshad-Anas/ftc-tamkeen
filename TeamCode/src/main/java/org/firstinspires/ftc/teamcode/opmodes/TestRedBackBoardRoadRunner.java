@@ -26,7 +26,10 @@ public class TestRedBackBoardRoadRunner extends LinearOpMode {
         MecanumDrivetrain drive = new MecanumDrivetrain(hardwareMap);
 
         Trajectory trajectory = drive.trajectoryBuilder(new Pose2d())
-                .strafeRight(45)
+                .strafeLeft(45)
+                .build();
+
+        Trajectory trajectory2 = drive.trajectoryBuilder(new Pose2d())
                 .forward(45)
                 .build();
 
@@ -35,6 +38,7 @@ public class TestRedBackBoardRoadRunner extends LinearOpMode {
         if (isStopRequested()) return;
 
         drive.followTrajectory(trajectory);
+        drive.followTrajectory(trajectory2);
 
         Pose2d poseEstimate = drive.getPoseEstimate();
         telemetry.addData("finalX", poseEstimate.getX());
