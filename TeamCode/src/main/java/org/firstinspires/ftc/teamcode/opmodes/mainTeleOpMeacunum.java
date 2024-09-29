@@ -34,21 +34,21 @@ public class mainTeleOpMeacunum extends LinearOpMode {
 
         robot = new Robot(hardwareMap);
 
-        hangerMotor = hardwareMap.dcMotor.get("hangerMotor");
-        planeServo = hardwareMap.servo.get("planeServo");
-        //clawServo1 = hardwareMap.servo.get("clawServo1");
-        //clawServo2 = hardwareMap.servo.get("clawServo2");
-        doorServo1 = hardwareMap.get(Servo.class, "doorServo1");
-        //doorServo2 = hardwareMap.get(Servo.class, "doorServo2");
-
-        planeServo.setPosition(1);
-
-        doorServo1.setPosition(0);
-        //doorServo2.setPosition(0);
-
+//        hangerMotor = hardwareMap.dcMotor.get("hangerMotor");
+//        planeServo = hardwareMap.servo.get("planeServo");
+//        clawServo1 = hardwareMap.servo.get("clawServo1");
+//        clawServo2 = hardwareMap.servo.get("clawServo2");
+//        doorServo1 = hardwareMap.get(Servo.class, "doorServo1");
+//        doorServo2 = hardwareMap.get(Servo.class, "doorServo2");
+//
+//        planeServo.setPosition(1);
+//
+//        doorServo1.setPosition(0);
+//        //doorServo2.setPosition(0);
+//
         waitForStart();
-
-        //doorServo2.setDirection(Servo.Direction.REVERSE);
+//
+//        //doorServo2.setDirection(Servo.Direction.REVERSE);
 
         // Control loop:
         while (opModeIsActive()) {
@@ -58,24 +58,24 @@ public class mainTeleOpMeacunum extends LinearOpMode {
             gamepadEx2.readButtons();
 
             //For the hanger
-            if (gamepad2.atRest()) {
-                hangerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            }
-            hangerMotor.setPower(gamepad2.left_trigger - gamepad2.right_trigger);
-
-            // For the plane servo
-            if (gamepad2.a) {
-
-                // Toggle the servo position
-                if (servoPositionIsZero) {
-                    planeServo.setPosition(1);
-                } else if (gamepad2.a) {
-                    planeServo.setPosition(0);
-                }
-
-                servoPositionIsZero = !servoPositionIsZero; // Toggle the state
-                sleep(500); // Add a delay to prevent rapid toggling
-            }
+//            if (gamepad2.atRest()) {
+//                hangerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//            }
+//            hangerMotor.setPower(gamepad2.left_trigger - gamepad2.right_trigger);
+//
+//            // For the plane servo
+//            if (gamepad2.a) {
+//
+//                // Toggle the servo position
+//                if (servoPositionIsZero) {
+//                    planeServo.setPosition(1);
+//                } else if (gamepad2.a) {
+//                    planeServo.setPosition(0);
+//                }
+//
+//                servoPositionIsZero = !servoPositionIsZero; // Toggle the state
+//                sleep(500); // Add a delay to prevent rapid toggling
+//            }
 
             // for the claw
 //            if (gamepad1.a && clawServo1.getPosition() == 0.0 && clawServo2.getPosition() == 0.0) {
@@ -91,13 +91,13 @@ public class mainTeleOpMeacunum extends LinearOpMode {
 //            }
 
             // Door Servo
-            if (gamepad1.a) {
-                if (doorServo1.getPosition() == 0) {
-                    setPosition(0.475);
-                } else {
-                    setPosition(0);
-                }
-            }
+//            if (gamepad1.a) {
+//                if (doorServo1.getPosition() == 0) {
+//                    setPosition(0.475);
+//                } else {
+//                    setPosition(0);
+//                }
+//            }
 
 
             // Field-centric drive dt with control stick inputs:

@@ -92,10 +92,10 @@ public class MecanumDrivetrain extends MecanumDrive {
 
         imu = new ThreadedIMU(hardwareMap, "imu", new RevHubOrientationOnRobot(LOGO_FACING_DIR, USB_FACING_DIR));
 
-        leftFront = hardwareMap.get(DcMotorEx.class, "left front");
-        leftBack = hardwareMap.get(DcMotorEx.class, "left back");
-        rightBack = hardwareMap.get(DcMotorEx.class, "right back");
-        rightFront = hardwareMap.get(DcMotorEx.class, "right front");
+        leftFront = hardwareMap.get(DcMotorEx.class, "leftf");
+        leftBack = hardwareMap.get(DcMotorEx.class, "leftback");
+        rightBack = hardwareMap.get(DcMotorEx.class, "rightback");
+        rightFront = hardwareMap.get(DcMotorEx.class, "rightf");
 
         motors = Arrays.asList(leftFront, leftBack, rightBack, rightFront);
 

@@ -26,11 +26,11 @@ public class TestBlueRoadRunner extends LinearOpMode {
         MecanumDrivetrain drive = new MecanumDrivetrain(hardwareMap);
 
         Trajectory traj1 = drive.trajectoryBuilder(new Pose2d())
-                .strafeRight(45)
+                .strafeRight(56)
                 .build();
 
         Trajectory traj2 = drive.trajectoryBuilder(new Pose2d())
-                .forward(95)
+                .forward(105)
                 .build();
 
         waitForStart();

@@ -46,11 +46,6 @@ public class testHanger extends LinearOpMode {
             }
             hangerMotor.setPower(gamepad2.left_trigger - gamepad2.right_trigger);
 
-
-
-
-
-
             mTelemetry.update();
         }
     }

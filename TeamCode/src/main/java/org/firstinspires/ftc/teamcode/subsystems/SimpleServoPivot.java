@@ -12,16 +12,16 @@ import com.arcrobotics.ftclib.hardware.SimpleServo;
  */
 public class SimpleServoPivot {
 
-    private final SimpleServo[] servos;
+  //  private final SimpleServo[] servos;
 
     private double ANGLE_A, ANGLE_B;
 
     private boolean activated = false;
 
-    public SimpleServoPivot(double ANGLE_A, double ANGLE_B, SimpleServo... servos) {
-        this.servos = servos;
-        updateAngles(ANGLE_A, ANGLE_B);
-    }
+    //public SimpleServoPivot(double ANGLE_A, double ANGLE_B, SimpleServo... servos) {
+      //  this.servos = servos;
+      //  updateAngles(ANGLE_A, ANGLE_B);
+  //  }
 
     public void updateAngles(double ANGLE_A, double ANGLE_B) {
         this.ANGLE_A = ANGLE_A;
@@ -56,7 +56,7 @@ public class SimpleServoPivot {
     /**
      * Hold {@link #servos} position
      */
-    public void run() {
-        for (SimpleServo servo : servos) servo.turnToAngle(activated ? ANGLE_B : ANGLE_A);
-    }
+   // public void run() {
+    //    for (SimpleServo servo : servos) servo.turnToAngle(activated ? ANGLE_B : ANGLE_A);
+   // }
 }
