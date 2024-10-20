@@ -19,7 +19,9 @@ public class mainTeleOpMeacunum extends LinearOpMode {
     Robot robot;
     boolean servoPositionIsZero = false;
     DcMotor hangerMotor;
-    //Servo clawServo1, clawServo2;
+    DcMotor armMotorTilt;
+    DcMotor armMotorSpin;
+    Servo clawServo1, clawServo2;
     Servo planeServo, doorServo1, doorServo2;
 
 
@@ -34,10 +36,12 @@ public class mainTeleOpMeacunum extends LinearOpMode {
 
         robot = new Robot(hardwareMap);
 
-//        hangerMotor = hardwareMap.dcMotor.get("hangerMotor");
+        hangerMotor = hardwareMap.dcMotor.get("hangerMotor");
+        armMotorTilt = hardwareMap.dcMotor.get("armMotorTilt");
+        armMotorSpin = hardwareMap.dcMotor.get("armMotorSpin");
 //        planeServo = hardwareMap.servo.get("planeServo");
-//        clawServo1 = hardwareMap.servo.get("clawServo1");
-//        clawServo2 = hardwareMap.servo.get("clawServo2");
+        clawServo1 = hardwareMap.servo.get("clawServo1");
+        clawServo2 = hardwareMap.servo.get("clawServo2");
 //        doorServo1 = hardwareMap.get(Servo.class, "doorServo1");
 //        doorServo2 = hardwareMap.get(Servo.class, "doorServo2");
 //
@@ -58,10 +62,14 @@ public class mainTeleOpMeacunum extends LinearOpMode {
             gamepadEx2.readButtons();
 
             //For the hanger
-//            if (gamepad2.atRest()) {
-//                hangerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//            }
-//            hangerMotor.setPower(gamepad2.left_trigger - gamepad2.right_trigger);
+            if (gamepad2.atRest()) {
+                hangerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                armMotorTilt.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                armMotorSpin.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            }
+            hangerMotor.setPower(gamepad2.left_trigger - gamepad2.right_trigger);
+            armMotorSpin.setPower(gamepad2.right_stick_x);
+            armMotorTilt.setPower(gamepad2.left_stick_y);
 //
 //            // For the plane servo
 //            if (gamepad2.a) {
@@ -78,17 +86,17 @@ public class mainTeleOpMeacunum extends LinearOpMode {
 //            }
 
             // for the claw
-//            if (gamepad1.a && clawServo1.getPosition() == 0.0 && clawServo2.getPosition() == 0.0) {
-//                clawServo1.setPosition(.5);
-//                clawServo2.setPosition(.5);
-//
-//
-//            } else if (gamepad1.a) {
-//                clawServo1.setPosition(0.0);
-//                clawServo2.setPosition(0.0);
-//
+            if (gamepad1.a && clawServo1.getPosition() == 0.0 && clawServo2.getPosition() == 0.0) {
+                clawServo1.setPosition(.5);
+                clawServo2.setPosition(.5);
 
-//            }
+
+            } else if (gamepad1.a) {
+                clawServo1.setPosition(0.0);
+                clawServo2.setPosition(0.0);
+
+
+            }
 
             // Door Servo
 //            if (gamepad1.a) {

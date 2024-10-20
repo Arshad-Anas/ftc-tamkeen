@@ -15,7 +15,9 @@ public class MeepMeepTesting {
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(-30, -56, 0))
                                 .strafeLeft(45)
-                                .forward(95)
+                                .forward(5)
+                                .back(5)
+                                .strafeLeft(65)
                                 .build()
                 );
         meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_OFFICIAL)
