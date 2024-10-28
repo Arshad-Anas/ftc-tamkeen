@@ -279,10 +279,10 @@ public class MecanumDrivetrain extends MecanumDrive {
 
     @Override
     public void setMotorPowers(double v, double v1, double v2, double v3) {
-        leftFront.setPower(v);
-        leftBack.setPower(v1);
-        rightBack.setPower(v2);
-        rightFront.setPower(v3);
+        leftFront.setPower(v*0.75);
+        leftBack.setPower(v1*0.75);
+        rightBack.setPower(v2*0.75);
+        rightFront.setPower(v3*0.75);
     }
 
     public static TrajectoryVelocityConstraint getVelocityConstraint(double maxVel, double maxAngularVel, double trackWidth) {
