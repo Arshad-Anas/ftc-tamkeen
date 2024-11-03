@@ -22,7 +22,7 @@ public class DriveConstants {
      * These are motor constants that should be listed online for your motors.
      */
     public static final double TICKS_PER_REV = 537.6;
-    public static final double MAX_RPM = 312;
+    public static final double MAX_RPM = 312.5;
 
     /*
      * Set RUN_USING_ENCODER to true to enable built-in hub velocity control using drive encoders.
@@ -46,7 +46,7 @@ public class DriveConstants {
      */
     public static double WHEEL_RADIUS = 1.88898; // in
     public static double GEAR_RATIO = 0.016921486884738; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 16.75; // in
+    public static double TRACK_WIDTH = 16.6; // in
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
