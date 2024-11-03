@@ -103,7 +103,7 @@ public class mainTeleOpMeacunum extends LinearOpMode {
                 clawServo1.setPosition(.5);
                 //clawServo2.setDirection(Servo.Direction.REVERSE);
                 //clawServo2.setPosition(.5);
-            }
+            } //
 
             // Door Servo
 //            if (gamepad1.a) {
