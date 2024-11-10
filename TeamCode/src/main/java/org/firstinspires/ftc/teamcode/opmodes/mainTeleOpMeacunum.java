@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.subsystems.centerstage.Robot;
 
 @TeleOp(group = "23925 TeleOp")
@@ -20,9 +19,10 @@ public class mainTeleOpMeacunum extends LinearOpMode {
     Robot robot;
     boolean servoPositionIsZero = false;
     DcMotor hangerMotor;
-    //DcMotor armMotorTilt;
+    DcMotor armMotor;
+    Servo armServoTilt;
     DcMotor armMotorSpin;
-    //Servo clawServo1, clawServo2;
+    Servo clawServo1, clawServo2;
     Servo planeServo, doorServo1, doorServo2;
 
 
@@ -38,11 +38,12 @@ public class mainTeleOpMeacunum extends LinearOpMode {
         robot = new Robot(hardwareMap);
 
         hangerMotor = hardwareMap.dcMotor.get("hangerMotor");
-        //armMotorTilt = hardwareMap.dcMotor.get("armMotorTilt");
+        armMotor = hardwareMap.dcMotor.get("armMotor");
         //armMotorSpin = hardwareMap.dcMotor.get("armMotorSpin");
-//        planeServo = hardwareMap.servo.get("planeServo");
-        //clawServo1 = hardwareMap.servo.get("clawServo1");
-        //clawServo2 = hardwareMap.servo.get("clawServo2");
+        //planeServo = hardwareMap.servo.get("planeServo");
+        clawServo1 = hardwareMap.servo.get("clawServo1");
+        clawServo2 = hardwareMap.servo.get("clawServo2");
+        armServoTilt = hardwareMap.servo.get("armMotorTilt");
 //        doorServo1 = hardwareMap.get(Servo.class, "doorServo1");
 //        doorServo2 = hardwareMap.get(Servo.class, "doorServo2");
 //
@@ -62,21 +63,52 @@ public class mainTeleOpMeacunum extends LinearOpMode {
             gamepadEx1.readButtons();
             gamepadEx2.readButtons();
 
-            //For the hanger
-            if (gamepad2.atRest()) {
+            /*
+            Driver 1 controllers
+             */
+            if (gamepad1.atRest()) {
                 hangerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                //armMotorTilt.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                //armMotorSpin.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            }
+            hangerMotor.setPower(gamepad1.left_trigger - gamepad1.right_trigger);
+
+            /*
+            Driver 2 controllers
+             */
+            if (gamepad2.atRest()) {
+                armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
 
-            telemetry.addData("motor", hangerMotor.getCurrentPosition());
-            //if (hangerMotor.getCurrentPosition() < 15) {
-                //hangerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            // for the claw
+            if (gamepad2.a && (clawServo1.getPosition() != 0.0 || clawServo2.getPosition() != 0.0)) {
+                clawServo1.setPosition(0.0);
+                clawServo2.setPosition(0.0);
+
+
+            } else if (gamepad2.a) {
+                clawServo1.setDirection(Servo.Direction.REVERSE);
+                clawServo1.setPosition(.5);
+                clawServo2.setDirection(Servo.Direction.REVERSE);
+                clawServo2.setPosition(.5);
+            }
+
+            if(gamepad2.b && armServoTilt.getPosition() != 0.0){
+                // For the Arm, controlled by driver 2
+                armMotor.setPower(0);
+                armServoTilt.setPosition(0.0);
+            }
+            else if(gamepad2.b) {
+                armMotor.setPower(1);
+                armServoTilt.setDirection(Servo.Direction.REVERSE);
+                armServoTilt.setPosition(.5);
+            }
+
+
+            //telemetry.addData("motor", armMotor.getCurrentPosition());
+            //if (armMotor.getCurrentPosition() < 15) {
+            //armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             //} else {
-                hangerMotor.setPower(gamepad2.left_trigger - gamepad2.right_trigger);
-            //}
-            //armMotorSpin.setPower(gamepad2.right_stick_x);
-            //armMotorTilt.setPower((gamepad2.left_stick_y)*0.5);
+
+
 //
 //            // For the plane servo
 //            if (gamepad2.a) {
@@ -90,28 +122,6 @@ public class mainTeleOpMeacunum extends LinearOpMode {
 //
 //                servoPositionIsZero = !servoPositionIsZero; // Toggle the state
 //                sleep(500); // Add a delay to prevent rapid toggling
-//            }
-
-            // for the claw
-            //if (gamepad2.a && (clawServo1.getPosition() != 0.0 || clawServo2.getPosition() != 0.0)) {
-                //clawServo1.setPosition(0.0);
-                //clawServo2.setPosition(0.0);
-
-
-            //} else if (gamepad2.a) {
-                //clawServo1.setDirection(Servo.Direction.REVERSE);
-                //clawServo1.setPosition(.5);
-                //clawServo2.setDirection(Servo.Direction.REVERSE);
-                //clawServo2.setPosition(.5);
-            //}
-
-            // Door Servo
-//            if (gamepad1.a) {
-//                if (doorServo1.getPosition() == 0) {
-//                    setPosition(0.475);
-//                } else {
-//                    setPosition(0);
-//                }
 //            }
 
 
@@ -129,7 +139,8 @@ public class mainTeleOpMeacunum extends LinearOpMode {
     }
 
     public void setPosition(double position) {
-        //doorServo1.setPosition(position);
+        doorServo1.setPosition(position);
         //doorServo2.setPosition(1 - position);
     }
 }
+
