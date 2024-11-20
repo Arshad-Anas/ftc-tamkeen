@@ -20,11 +20,7 @@ public class mainTeleOpMeacunum extends LinearOpMode {
     Robot robot;
     boolean servoPositionIsZero = false;
     DcMotor hangerMotor;
-    //DcMotor armMotorTilt;
-    DcMotor armMotorSpin;
-    //Servo clawServo1, clawServo2;
-    Servo planeServo, doorServo1, doorServo2;
-
+    Servo clawServo1, clawServo2, upDownServo1, upDownServo2;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -38,72 +34,91 @@ public class mainTeleOpMeacunum extends LinearOpMode {
         robot = new Robot(hardwareMap);
 
         hangerMotor = hardwareMap.dcMotor.get("hangerMotor");
-        //armMotorTilt = hardwareMap.dcMotor.get("armMotorTilt");
-        //armMotorSpin = hardwareMap.dcMotor.get("armMotorSpin");
-//        planeServo = hardwareMap.servo.get("planeServo");
-        //clawServo1 = hardwareMap.servo.get("clawServo1");
-        //clawServo2 = hardwareMap.servo.get("clawServo2");
-//        doorServo1 = hardwareMap.get(Servo.class, "doorServo1");
-//        doorServo2 = hardwareMap.get(Servo.class, "doorServo2");
-//
-//        planeServo.setPosition(1);
-//
-//        doorServo1.setPosition(0);
-//        //doorServo2.setPosition(0);
-//
+        clawServo1 = hardwareMap.servo.get("clawServo1");
+        clawServo2 = hardwareMap.servo.get("clawServo2");
+        upDownServo1 = hardwareMap.servo.get("upDownServo1");
+        upDownServo2 = hardwareMap.servo.get("upDownServo2");
+
+        robot.readSensors();
+        // Read sensors + gamepads:
+        gamepadEx1.readButtons();
+        gamepadEx2.readButtons();
+
         waitForStart();
-//
-//        //doorServo2.setDirection(Servo.Direction.REVERSE);
 
         // Control loop:
         while (opModeIsActive()) {
-            robot.readSensors();
-            // Read sensors + gamepads:
-            gamepadEx1.readButtons();
-            gamepadEx2.readButtons();
+
+            //For the upDownServo to move
+            if (gamepad2.a) {
+                upDownServo1.setDirection(Servo.Direction.FORWARD);
+                upDownServo1.setPosition(0.0);
+                upDownServo2.setDirection(Servo.Direction.REVERSE);
+                upDownServo2.setPosition(0.0);
+            }
+
+            if (gamepad2.b) {
+                upDownServo1.setDirection(Servo.Direction.REVERSE);
+                upDownServo1.setPosition(0.5);
+                upDownServo2.setDirection(Servo.Direction.FORWARD);
+                upDownServo2.setPosition(0.5);
+            }
+
+            if (gamepad2.dpad_up) {
+                upDownServo1.setDirection(Servo.Direction.REVERSE);
+                upDownServo1.setPosition(0.9);
+                upDownServo2.setDirection(Servo.Direction.FORWARD);
+                upDownServo2.setPosition(0.9);
+            }
+            //robot.interrupt();
+
+            // For the claw to open and close
+            if (gamepad2.x) {
+                clawServo1.setDirection(Servo.Direction.FORWARD);
+                clawServo1.setPosition(0.0);
+                clawServo2.setDirection(Servo.Direction.REVERSE);
+                clawServo2.setPosition(0.0);
+            } else if (gamepad2.y) {
+                clawServo1.setDirection(Servo.Direction.REVERSE);
+                clawServo1.setPosition(.5);
+                clawServo2.setDirection(Servo.Direction.FORWARD);
+                clawServo2.setPosition(.5);
+            }
+            //robot.interrupt();
 
             //For the hanger
             if (gamepad2.atRest()) {
                 hangerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                //armMotorTilt.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                //armMotorSpin.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
+            //robot.interrupt();
 
-            telemetry.addData("motor", hangerMotor.getCurrentPosition());
-            //if (hangerMotor.getCurrentPosition() < 15) {
-                //hangerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            //} else {
-                hangerMotor.setPower(gamepad2.left_trigger - gamepad2.right_trigger);
-            //}
-            //armMotorSpin.setPower(gamepad2.right_stick_x);
-            //armMotorTilt.setPower((gamepad2.left_stick_y)*0.5);
-//
-//            // For the plane servo
-//            if (gamepad2.a) {
-//
-//                // Toggle the servo position
-//                if (servoPositionIsZero) {
-//                    planeServo.setPosition(1);
-//                } else if (gamepad2.a) {
-//                    planeServo.setPosition(0);
-//                }
-//
-//                servoPositionIsZero = !servoPositionIsZero; // Toggle the state
-//                sleep(500); // Add a delay to prevent rapid toggling
+            telemetry.addData("motor", upDownServo1.getPosition());
+
+            hangerMotor.setPower(gamepad2.left_trigger - gamepad2.right_trigger);
+            //robot.interrupt();
+
+//            if (gamepad2.a && (clawServo1.getPosition() != 0.0 || clawServo2.getPosition() != 0.0)) {
+//                clawServo1.setPosition(0.0);
+//                clawServo2.setPosition(0.0);
+//            } else if (gamepad2.a) {
+//                clawServo1.setDirection(Servo.Direction.REVERSE);
+//                clawServo1.setPosition(.25);
+//                clawServo2.setDirection(Servo.Direction.FORWARD);
+//                clawServo2.setPosition(.25);
 //            }
 
-            // for the claw
-            //if (gamepad2.a && (clawServo1.getPosition() != 0.0 || clawServo2.getPosition() != 0.0)) {
-                //clawServo1.setPosition(0.0);
-                //clawServo2.setPosition(0.0);
-
-
-            //} else if (gamepad2.a) {
-                //clawServo1.setDirection(Servo.Direction.REVERSE);
-                //clawServo1.setPosition(.5);
-                //clawServo2.setDirection(Servo.Direction.REVERSE);
-                //clawServo2.setPosition(.5);
-            //}
+//            // For the upDownServo to move
+//            if (gamepad2.b && (upDownServo1.getPosition() != 0.0 || upDownServo2.getPosition() != 0.0)) {
+//                upDownServo1.setDirection(Servo.Direction.FORWARD);
+//                upDownServo1.setPosition(0.0);
+//                upDownServo2.setDirection(Servo.Direction.REVERSE);
+//                upDownServo2.setPosition(0.0);
+//            } else if (gamepad2.b) {
+//                upDownServo1.setDirection(Servo.Direction.REVERSE);
+//                upDownServo1.setPosition(.5);
+//                upDownServo2.setDirection(Servo.Direction.FORWARD);
+//                upDownServo2.setPosition(.5);
+//            }
 
             // Door Servo
 //            if (gamepad1.a) {
