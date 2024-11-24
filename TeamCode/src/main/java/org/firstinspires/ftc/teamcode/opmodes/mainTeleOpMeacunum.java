@@ -50,35 +50,37 @@ public class mainTeleOpMeacunum extends LinearOpMode {
         while (opModeIsActive()) {
 
             //For the upDownServo to move
-            if (gamepad2.a) {
+            if (gamepad2.dpad_down) {
                 upDownServo1.setDirection(Servo.Direction.FORWARD);
-                upDownServo1.setPosition(0.0);
+                upDownServo1.setPosition(0.9);
                 upDownServo2.setDirection(Servo.Direction.REVERSE);
-                upDownServo2.setPosition(0.0);
+                upDownServo2.setPosition(0.9);
             }
 
-            if (gamepad2.b) {
+            if (gamepad2.dpad_up) {
                 upDownServo1.setDirection(Servo.Direction.REVERSE);
                 upDownServo1.setPosition(0.5);
                 upDownServo2.setDirection(Servo.Direction.FORWARD);
                 upDownServo2.setPosition(0.5);
             }
 
-            if (gamepad2.dpad_up) {
-                upDownServo1.setDirection(Servo.Direction.REVERSE);
-                upDownServo1.setPosition(0.9);
-                upDownServo2.setDirection(Servo.Direction.FORWARD);
-                upDownServo2.setPosition(0.9);
-            }
+//            if (gamepad2.dpad_up) {
+//                upDownServo1.setDirection(Servo.Direction.REVERSE);
+//                upDownServo1.setPosition(0.0);
+//                upDownServo2.setDirection(Servo.Direction.FORWARD);
+//                upDownServo2.setPosition(0.0);
+//            }
             //robot.interrupt();
 
             // For the claw to open and close
-            if (gamepad2.x) {
+            if (gamepad2.y) {
                 clawServo1.setDirection(Servo.Direction.FORWARD);
                 clawServo1.setPosition(0.0);
                 clawServo2.setDirection(Servo.Direction.REVERSE);
                 clawServo2.setPosition(0.0);
-            } else if (gamepad2.y) {
+            }
+
+            if (gamepad2.x) {
                 clawServo1.setDirection(Servo.Direction.REVERSE);
                 clawServo1.setPosition(.5);
                 clawServo2.setDirection(Servo.Direction.FORWARD);
