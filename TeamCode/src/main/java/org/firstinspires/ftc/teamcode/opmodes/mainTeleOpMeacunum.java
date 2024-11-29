@@ -18,9 +18,8 @@ public class mainTeleOpMeacunum extends LinearOpMode {
     MultipleTelemetry mTelemetry;
     GamepadEx gamepadEx1, gamepadEx2;
     Robot robot;
-    boolean servoPositionIsZero = false;
-    DcMotor hangerMotor;
-    Servo clawServo1, clawServo2, upDownServo1, upDownServo2;
+    DcMotor hangerMotor, submersibleMotor, specimenMotor;
+    Servo clawServo1, clawServo2, upDownServo1, upDownServo2, clawSpecimenServo1, clawSpecimenServo2;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -34,10 +33,14 @@ public class mainTeleOpMeacunum extends LinearOpMode {
         robot = new Robot(hardwareMap);
 
         hangerMotor = hardwareMap.dcMotor.get("hangerMotor");
+        specimenMotor = hardwareMap.dcMotor.get("specimenMotor");
+        submersibleMotor = hardwareMap.dcMotor.get("submersibleMotor");
         clawServo1 = hardwareMap.servo.get("clawServo1");
         clawServo2 = hardwareMap.servo.get("clawServo2");
+        clawSpecimenServo1 = hardwareMap.servo.get("clawSpecimenServo1");
+        clawSpecimenServo2 = hardwareMap.servo.get("clawSpecimenServo2");
         upDownServo1 = hardwareMap.servo.get("upDownServo1");
-        upDownServo2 = hardwareMap.servo.get("upDownServo2");
+        //upDownServo2 = hardwareMap.servo.get("upDownServo2");
 
         robot.readSensors();
         // Read sensors + gamepads:
@@ -49,30 +52,22 @@ public class mainTeleOpMeacunum extends LinearOpMode {
         // Control loop:
         while (opModeIsActive()) {
 
-            //For the upDownServo to move
+            // for the submersible claw to go up so the sample can leave the zone
             if (gamepad2.dpad_down) {
-                upDownServo1.setDirection(Servo.Direction.FORWARD);
-                upDownServo1.setPosition(0.9);
-                upDownServo2.setDirection(Servo.Direction.REVERSE);
-                upDownServo2.setPosition(0.9);
+                upDownServo1.setDirection(Servo.Direction.REVERSE);
+                upDownServo1.setPosition(0.0);
+                //upDownServo2.setDirection(Servo.Direction.FORWARD);
+                //upDownServo2.setPosition(0.0);
             }
 
             if (gamepad2.dpad_up) {
                 upDownServo1.setDirection(Servo.Direction.REVERSE);
                 upDownServo1.setPosition(0.5);
-                upDownServo2.setDirection(Servo.Direction.FORWARD);
-                upDownServo2.setPosition(0.5);
+                //upDownServo2.setDirection(Servo.Direction.FORWARD);
+                //upDownServo2.setPosition(0.5);
             }
 
-//            if (gamepad2.dpad_up) {
-//                upDownServo1.setDirection(Servo.Direction.REVERSE);
-//                upDownServo1.setPosition(0.0);
-//                upDownServo2.setDirection(Servo.Direction.FORWARD);
-//                upDownServo2.setPosition(0.0);
-//            }
-            //robot.interrupt();
-
-            // For the claw to open and close
+            // For the claw to open and close grab things in the submersible
             if (gamepad2.y) {
                 clawServo1.setDirection(Servo.Direction.FORWARD);
                 clawServo1.setPosition(0.0);
@@ -86,51 +81,32 @@ public class mainTeleOpMeacunum extends LinearOpMode {
                 clawServo2.setDirection(Servo.Direction.FORWARD);
                 clawServo2.setPosition(.5);
             }
-            //robot.interrupt();
+
+            //for the claw specimen
+            if (gamepad2.a) {
+                clawSpecimenServo1.setDirection(Servo.Direction.FORWARD);
+                clawSpecimenServo1.setPosition(0.0);
+                clawSpecimenServo2.setDirection(Servo.Direction.REVERSE);
+                clawSpecimenServo2.setPosition(0.0);
+            }
+
+            if (gamepad2.b) {
+                clawSpecimenServo1.setDirection(Servo.Direction.REVERSE);
+                clawSpecimenServo1.setPosition(.5);
+                clawSpecimenServo2.setDirection(Servo.Direction.FORWARD);
+                clawSpecimenServo2.setPosition(.5);
+            }
 
             //For the hanger
             if (gamepad2.atRest()) {
                 hangerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
-            //robot.interrupt();
 
             telemetry.addData("motor", upDownServo1.getPosition());
 
-            hangerMotor.setPower(gamepad2.left_trigger - gamepad2.right_trigger);
-            //robot.interrupt();
-
-//            if (gamepad2.a && (clawServo1.getPosition() != 0.0 || clawServo2.getPosition() != 0.0)) {
-//                clawServo1.setPosition(0.0);
-//                clawServo2.setPosition(0.0);
-//            } else if (gamepad2.a) {
-//                clawServo1.setDirection(Servo.Direction.REVERSE);
-//                clawServo1.setPosition(.25);
-//                clawServo2.setDirection(Servo.Direction.FORWARD);
-//                clawServo2.setPosition(.25);
-//            }
-
-//            // For the upDownServo to move
-//            if (gamepad2.b && (upDownServo1.getPosition() != 0.0 || upDownServo2.getPosition() != 0.0)) {
-//                upDownServo1.setDirection(Servo.Direction.FORWARD);
-//                upDownServo1.setPosition(0.0);
-//                upDownServo2.setDirection(Servo.Direction.REVERSE);
-//                upDownServo2.setPosition(0.0);
-//            } else if (gamepad2.b) {
-//                upDownServo1.setDirection(Servo.Direction.REVERSE);
-//                upDownServo1.setPosition(.5);
-//                upDownServo2.setDirection(Servo.Direction.FORWARD);
-//                upDownServo2.setPosition(.5);
-//            }
-
-            // Door Servo
-//            if (gamepad1.a) {
-//                if (doorServo1.getPosition() == 0) {
-//                    setPosition(0.475);
-//                } else {
-//                    setPosition(0);
-//                }
-//            }
-
+            specimenMotor.setPower(gamepad2.left_trigger - gamepad2.right_trigger);
+            submersibleMotor.setPower(gamepad2.right_stick_y);
+            hangerMotor.setPower(gamepad1.left_trigger - gamepad1.right_trigger);
 
             // Field-centric drive dt with control stick inputs:
             robot.drivetrain.run(

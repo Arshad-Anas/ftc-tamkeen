@@ -9,8 +9,8 @@ public class TankDriveTrain {
     private DcMotor rightMotor;
 
     public TankDriveTrain(HardwareMap hardwareMap) {
-        leftMotor = hardwareMap.get(DcMotor.class, "left");
-        rightMotor = hardwareMap.get(DcMotor.class, "rightd");
+        leftMotor = hardwareMap.get(DcMotor.class, "leftback");
+        rightMotor = hardwareMap.get(DcMotor.class, "rightback");
         leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);

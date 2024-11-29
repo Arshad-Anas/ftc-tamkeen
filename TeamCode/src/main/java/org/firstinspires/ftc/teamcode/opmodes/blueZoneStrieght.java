@@ -39,11 +39,23 @@ public class blueZoneStrieght extends LinearOpMode {
     public void blueZoneStraight() {
         sleep(4000);
         long startTime = System.currentTimeMillis();
-        long durationForward = 1450; // 2 seconds
+        long durationForward = 1850;
+        long durationBackwards = 6050;
 
         while (opModeIsActive() && System.currentTimeMillis() - startTime < durationForward) {
             for (LynxModule hub : hubs) hub.clearBulkCache();
-            drive.setPower(-1.0, 0.0); // Go forward at full power
+            drive.setPower(-.5, 0.0); // Go forward at full power
+            myTelemetry.update();
+        }
+
+        drive.setPower(0.0, 0.0); // Stop the robot
+        sleep(1000);
+
+        startTime = System.currentTimeMillis();
+
+        while (opModeIsActive() && System.currentTimeMillis() - startTime < durationBackwards) {
+            for (LynxModule hub : hubs) hub.clearBulkCache();
+            drive.setPower(.5, 0.0); // Go forward at full power
             myTelemetry.update();
         }
 
